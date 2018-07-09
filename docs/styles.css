@@ -4,3 +4,29 @@ html, body {
     padding: 0;
     width: 100%
 }
+#content {
+    display: block;
+    width: 100%;
+}
+.team {
+    overflow: auto;
+    width: 100%;
+}
+.team h1 {
+    text-align: center;
+}
+.team dl {
+    width: 100%
+}
+.team dl:after {
+    content: '';
+    clear: both;
+}
+.team dt {
+    float: left;
+    font-weight: 600;
+}
+.team dd {
+    float: left;
+    margin: 0 15px;
+}
