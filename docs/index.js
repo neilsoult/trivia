@@ -1,6 +1,8 @@
-import { data } from './data';
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const data_1 = require("./data");
 const content = document.getElementById('content');
-data.forEach((team) => {
+data_1.data.forEach((team) => {
     const teamDiv = document.createElement('div');
     teamDiv.classList.add('team');
     const h1 = document.createElement('h1');
