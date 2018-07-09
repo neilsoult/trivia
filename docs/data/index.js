@@ -1,6 +1,4 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.data = [
+export const data = [
     {
         "name": "No Pants Party",
         "results": [

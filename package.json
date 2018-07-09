@@ -4,7 +4,6 @@
   "description": "na",
   "main": "index.js",
   "scripts": {
-    "build": "tsc ./src/index",
     "deploy": "git add . && git commit -m 'deploying' && sudo git push origin master",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc"

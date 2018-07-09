@@ -1,1 +1,1 @@
-https://github.com/pages/nsoult/trivia/
+https://neilsoult.github.io/trivia/index.html
