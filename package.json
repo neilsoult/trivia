@@ -4,6 +4,7 @@
   "description": "na",
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
     "deploy": "git add . && git commit -m 'deploying' && sudo git push origin master",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc"
@@ -22,6 +23,9 @@
     "@types/d3": "5.0.0",
     "d3": "5.5.0",
     "moment": "2.22.2",
-    "typescript": "2.9.2"
+    "ts-loader": "4.4.2",
+    "typescript": "2.9.2",
+    "webpack": "4.15.1",
+    "webpack-cli": "3.0.8"
   }
 }
