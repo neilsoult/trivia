@@ -1,1 +1,1 @@
-# trivia
+https://github.com/pages/nsoult/trivia/
