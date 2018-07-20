@@ -21,6 +21,8 @@
   "homepage": "https://github.com/neilsoult/trivia#readme",
   "devDependencies": {
     "@types/d3": "5.0.0",
+    "@types/moment": "2.13.0",
+    "@types/nvd3": "1.8.39",
     "d3": "5.5.0",
     "moment": "2.22.2",
     "ts-loader": "4.4.2",

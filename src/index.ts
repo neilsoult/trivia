@@ -1,6 +1,9 @@
 import { data } from './data';
-import { Team, YearData } from './interfaces';
-import * as d3 from 'd3';
+import { Team, YearData, Result } from './interfaces';
+
+declare const moment: any;
+declare const d3: any;
+declare const nv: nv.Nvd3Static;
 
 const content = document.getElementById('content');
 
@@ -27,65 +30,53 @@ data.forEach((team: Team) => {
     teamDiv.appendChild(h1);
     teamDiv.appendChild(totalsDl);
 
+    const chartEl = document.createElement('div');
+    chartEl.classList.add('with-3d-shadow', 'with-transitions', 'averageDegreesLineChart');
+    chartEl.appendChild(document.createElementNS('http://www.w3.org/2000/svg', 'svg'));
+
+    teamDiv.appendChild(chartEl);
+
     content!.appendChild(teamDiv);
 
-    // Set the dimensions of the canvas / graph
-    const margin = {top: 30, right: 20, bottom: 30, left: 50},
-        width = 600 - margin.left - margin.right,
-        height = 270 - margin.top - margin.bottom;
+    const data: {key: string, values: { x: any, y: any }[] }[] = [
+        {
+            key: 'Key',
+            values: []
+        }
+    ];
+    team.results.forEach((result: Result) => {
 
-    // Parse the date / time
-    const parseDate = d3.time.format("%d-%b-%y").parse;
+        data[0].values.push({
+            x: moment(result.date).utc().valueOf(),
+            y: result.score
+        })
 
-    // Set the ranges
-    var x = d3.time.scale().range([0, width]);
-    var y = d3.scale.linear().range([height, 0]);
-
-    // Define the axes
-    var xAxis = d3.svg.axis().scale(x)
-    .orient("bottom").ticks(5);
-
-    var yAxis = d3.svg.axis().scale(y)
-    .orient("left").ticks(5);
-
-    // Define the line
-    var valueline = d3.svg.line()
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.close); });
-
-    // Adds the svg canvas
-    var svg = d3.select("body")
-    .append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-        .attr("transform",
-            "translate(" + margin.left + "," + margin.top + ")");
-
-    // Get the data
-    team.results.forEach(function(d) {
-        d.date = parseDate(d.date);
-        d.close = +d.close;
     });
+    console.log(data);
+    nv.addGraph(() => {
 
-    // Scale the range of the data
-    x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([0, d3.max(data, function(d) { return d.close; })]);
+        const chart = nv.models.lineChart() // Initialise the lineChart object.
+        .useInteractiveGuideline(true); // Turn on interactive guideline (tooltips)
 
-    // Add the valueline path.
-    svg.append("path")
-        .attr("class", "line")
-        .attr("d", valueline(data));
+        chart.xAxis
+        .axisLabel('TimeStamp') // Set the label of the xAxis (Vertical)
+        .tickFormat((ts: number) => {
 
-    // Add the X Axis
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
+            return d3.time.format('%b')(new Date(ts));
 
-    // Add the Y Axis
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis);
+        });
 
+        chart.yAxis
+        .axisLabel('Score'); // Set the label of the yAxis (Horizontal)
+        // .tickFormat(d3.format('.02f')); // Rounded Numbers Format.
+
+        d3.select(chartEl.querySelector('svg'))
+        .datum(data)
+        .transition().duration(500) // Set transition speed
+        .call(chart); // Call & Render the chart
+
+        nv.utils.windowResize(chart.update); // Intitiate listener for window resize so the chart responds and changes width.
+        return chart;
+
+    });
 });

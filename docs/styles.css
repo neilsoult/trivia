@@ -16,6 +16,7 @@ html, body {
     text-align: center;
 }
 .team dl {
+    height: 20px;
     width: 100%
 }
 .team dl:after {
@@ -29,4 +30,8 @@ html, body {
 .team dd {
     float: left;
     margin: 0 15px;
+}
+
+.averageDegreesLineChart {
+    height: 300px;
 }
